@@ -1,11 +1,16 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <math.h>
 
 bool is_power_of_two(unsigned int n) {
 	return n && !(n & (n - 1));
 }
 
 unsigned int next_power_of_two1(unsigned int n) {
+	return pow(2, ceil(log(n)/log(2)));
+}
+
+unsigned int next_power_of_two2(unsigned int n) {
 	if (n && !(n & (n - 1))) {
 		return n;
 	}
@@ -19,7 +24,7 @@ unsigned int next_power_of_two1(unsigned int n) {
 	return 1 << count;
 }
 
-unsigned int next_power_of_two2(unsigned int n) {
+unsigned int next_power_of_two3(unsigned int n) {
 	if (n && !(n & (n - 1))) {
 		return n;
 	}
@@ -32,7 +37,7 @@ unsigned int next_power_of_two2(unsigned int n) {
 	return p;
 }
 
-unsigned int next_power_of_two3(unsigned int n) {
+unsigned int next_power_of_two4(unsigned int n) {
 	n = n - 1;
 	n |= n >> 1;
 	n |= n >> 2;
@@ -51,6 +56,7 @@ int main(int argc, char** argv) {
 		printf("%d -> %d\n", x[i], next_power_of_two1(x[i]));
 		printf("%d -> %d\n", x[i], next_power_of_two2(x[i]));
 		printf("%d -> %d\n", x[i], next_power_of_two3(x[i]));
+		printf("%d -> %d\n", x[i], next_power_of_two4(x[i]));
 	}
 	printf("\n");
 	return 0;
