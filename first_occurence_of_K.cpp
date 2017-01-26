@@ -1,30 +1,29 @@
 /**
- * Find fist occurence of number K in a sorted array.
+ * Find fist occurence of number K in a sorted vector.
  *
  */
 
 #include <iostream>
 #include <algorithm>
 #include <random>
-#include <array>
+#include <vector>
 #include <string>
 
 using namespace std;
 
-const int N = 10;
 
-int find_first_of_K(const array<int, N>& A, int K) {
+int find_first_of_K(const vector<int>& vec, int K) {
 	int left = 0;
-	int right = A.size() - 1;
+	int right = vec.size() - 1;
 	int result = -1;
 
 	while (left <= right) {
 		
 		int mid = left + ((right - left)) / 2;
 		
-		if (A[mid] > K) {
+		if (vec[mid] > K) {
 			right = mid - 1;
-		} else if (A[mid] == K) {
+		} else if (vec[mid] == K) {
 			result = mid;
 			right = mid - 1;
 		} else {
@@ -36,8 +35,8 @@ int find_first_of_K(const array<int, N>& A, int K) {
 	return result;
 }
 
-void print_array(const array<int, N> arr) {
-	for (const auto& a : arr) {
+void print_vector(const vector<int>& vec) {
+	for (const auto& a : vec) {
 		cout << a << ' ';
 	}
 	cout << endl;
@@ -45,31 +44,28 @@ void print_array(const array<int, N> arr) {
 
 int main(int argc, char* argv[]) {
 
-	if (argc != 2) {
-		cerr << "usage: " << argv[0] << " <K>" << endl;
+	if (argc != 3) {
+		cerr << "usage: " << argv[0] << " <size_of_vector> <K>" << endl;
 		return -1;
 	}
 
-	int K = stoi(argv[1]);
+	int N = stoi(argv[1]);
+	int K = stoi(argv[2]);
 
 	random_device rd;
 	default_random_engine dre(rd());
 	uniform_int_distribution<int> uid(0, N);
 
-	array<int, N> arr;
-	for (int i = 0; i < arr.size(); i++) {
-		arr[i] = uid(dre);
-	}
+	vector<int> vec(N);
+	generate(vec.begin(), vec.end(), [&]() { return uid(dre); });
 
-	// print_array(arr);
+	sort(vec.begin(), vec.end());
 
-	sort(arr.begin(), arr.end());
-
-	print_array(arr);
+	print_vector(vec);
 
 	cout << endl;
 
-	cout << "First occurence of " << K << ": " << find_first_of_K(arr, K) << endl;
+	cout << "First occurence of " << K << ": " << find_first_of_K(vec, K) << endl;
 
 	return 0;
 }
