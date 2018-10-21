@@ -11,14 +11,15 @@
 
 using namespace std;
 
-
 int find_first_of_K(const vector<int>& vec, int K) {
 	int left = 0;
 	int right = vec.size() - 1;
 	int result = -1;
 
+	// binary search
 	while (left <= right) {
-		
+		// this prevents overflow which might happend
+		// in case: int mid = (left + right) / 2;
 		int mid = left + ((right - left)) / 2;
 		
 		if (vec[mid] > K) {
