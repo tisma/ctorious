@@ -1,9 +1,12 @@
+#include <stdio.h>
 #include <sys/ptrace.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/reg.h>
 #include <sys/user.h>
 #include <unistd.h>
+
+#define ORIG_EAX 11
 
 int main()
 {
@@ -21,7 +24,7 @@ int main()
 		
 		printf("The child made a system call %ld\n", orig_eax);
 
-		ptrace(PTRACE_COUNT, child, NULL, NULL);
+		ptrace(PTRACE_CONT, child, NULL, NULL);
 	}
 
 	return 0;
